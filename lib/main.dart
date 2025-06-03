@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:recipes_app/feature_recipes/domain/data/data_source/recipe_dao_api.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const RecipesApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class RecipesApp extends StatelessWidget {
+  const RecipesApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,10 +33,13 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
-  void _incrementCounter() {
+  void _incrementCounter() async {
     setState(() {
       _counter++;
     });
+    final api = RecipeDaoApi();
+    final result = await api.getRecipes();
+    print(result);
   }
 
   @override
@@ -86,7 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
     );
   }
 }

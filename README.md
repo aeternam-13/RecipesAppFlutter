@@ -14,3 +14,7 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+
+
+Limitations:
+The API doesn't expose a method for fetching all meals. There are inneficient ways to do it, like fetch every letter and joining the recipes into a single lists.
