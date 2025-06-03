@@ -18,3 +18,7 @@ samples, guidance on mobile development, and a full API reference.
 
 Limitations:
 The API doesn't expose a method for fetching all meals. There are inneficient ways to do it, like fetch every letter and joining the recipes into a single lists.
+
+The values return for the API are in a terrible state, it has 20 posible ingredient keys instead of a list, same for mesures
+
+I had to reconvert the response into a flutter usable one

@@ -89,7 +89,7 @@ class Recipe with RecipeMappable {
 
     int i = 0;
 
-    ///Did it in 2 methods, because im not sure if they will sent same ammount of
+    ///Did it like this because im not sure if they will sent same ammount of
     ///incredients and measures, maybe the send an ingredient without measures in the middle
 
     ///To get all ingredients

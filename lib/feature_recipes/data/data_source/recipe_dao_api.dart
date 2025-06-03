@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:http/http.dart';
 import 'package:multiple_result/multiple_result.dart';
 import 'package:recipes_app/core/errors.dart';
-import 'package:recipes_app/feature_recipes/domain/data/data_source/recipe_dao.dart';
+import 'package:recipes_app/feature_recipes/data/data_source/recipe_dao.dart';
 import 'package:recipes_app/feature_recipes/domain/model/recipe.dart';
 import 'package:http/http.dart' as http;
 
