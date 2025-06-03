@@ -11,7 +11,7 @@ import 'package:recipes_app/feature_recipes/presentation/recipes/recipes_bloc.da
 final sl = GetIt.instance;
 
 void initServices() {
-  sl.registerLazySingleton<RecipeDao>(() => RecipeDaoApi());
+  sl.registerLazySingleton<RecipeDao>(() => RecipeDaoImpl());
 
   sl.registerLazySingleton<RecipeRepository>(() => RecipeRepositoryImpl(sl()));
 

@@ -5,7 +5,5 @@ class AddToFavorites {
 
   AddToFavorites(this.repository);
 
-  Future<void> call(String recipeId) {
-    return repository.addToFavorites(recipeId);
-  }
+  Future<void> call(String recipeId) => repository.toogleFavorites(recipeId);
 }

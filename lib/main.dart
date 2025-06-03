@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
+import 'package:hive_ce/hive.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:recipes_app/di/dependency_injection.dart';
 import 'package:recipes_app/feature_recipes/presentation/recipes/recipes_bloc.dart';
 import 'package:recipes_app/feature_recipes/presentation/recipes/recipes_screen.dart';
 
-void main() {
+Future<void> main() async {
+  /// get_it dependencies
   initServices();
+
+  final dir = await getApplicationDocumentsDirectory();
+  Hive.init(dir.path);
+  await Hive.openBox<Set<String>>('favoritesBox');
   runApp(const RecipesApp());
 }
 

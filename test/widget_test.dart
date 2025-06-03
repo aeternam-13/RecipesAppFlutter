@@ -25,7 +25,7 @@ void main() {
   });
 
   test('API call', () async {
-    RecipeDaoApi recipeDaoApi = RecipeDaoApi();
+    RecipeDaoImpl recipeDaoApi = RecipeDaoImpl();
 
     await recipeDaoApi.getRecipes();
     print("asddsa");

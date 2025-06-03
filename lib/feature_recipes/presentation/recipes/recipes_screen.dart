@@ -23,7 +23,7 @@ class _RecipesScreenState extends State<RecipesScreen> {
   }
 
   void _testAPI() async {
-    final api = RecipeDaoApi();
+    final api = RecipeDaoImpl();
     final result = await api.getRecipes();
     log(result.toString());
   }
