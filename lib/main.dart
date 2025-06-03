@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
+import 'package:recipes_app/di/dependency_injection.dart';
+import 'package:recipes_app/feature_recipes/presentation/recipes/recipes_bloc.dart';
 import 'package:recipes_app/feature_recipes/presentation/recipes/recipes_screen.dart';
 
 void main() {
+  initServices();
   runApp(const RecipesApp());
 }
 
@@ -15,7 +20,10 @@ class RecipesApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const RecipesScreen(),
+      home: MultiBlocProvider(
+        providers: [BlocProvider(create: (_) => sl<RecipesBloc>())],
+        child: const RecipesScreen(),
+      ),
     );
   }
 }

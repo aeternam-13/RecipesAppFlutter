@@ -7,7 +7,7 @@ import 'package:recipes_app/feature_recipes/data/data_source/recipe_dao.dart';
 import 'package:recipes_app/feature_recipes/domain/model/recipe.dart';
 import 'package:http/http.dart' as http;
 
-class RecipeDaoApi implements RecipeDao {
+class RecipeDaoApi extends RecipeDao {
   final String _baseUrl = "https://www.themealdb.com/api/json/v1/1/";
 
   final int _requestTimeout = 45;

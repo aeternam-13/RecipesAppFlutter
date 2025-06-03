@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:dart_mappable/dart_mappable.dart';
 import 'package:recipes_app/core/errors.dart';
 import 'package:recipes_app/core/sanitizer.dart';

@@ -12,9 +12,7 @@ String sanitizeString(
     throw RecipeParseError(message: "Missing value $key");
   }
 
-  if (!json.containsKey(key)) return "";
-
-  if (json[key] == null) return "";
+  if (!json.containsKey(key) || json[key] == null) return "";
 
   return json[key].toString();
 }
