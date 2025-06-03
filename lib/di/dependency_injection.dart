@@ -19,8 +19,6 @@ void initServices() {
     () => RecipeUseCases(
       getRecipes: GetRecipes(sl()),
       addToFavorites: AddToFavorites(sl()),
-      // saveRecipe: SaveRecipe(sl()),
-      // deleteRecipe: DeleteRecipe(sl()),
     ),
   );
 

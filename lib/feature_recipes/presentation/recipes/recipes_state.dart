@@ -1,5 +1,5 @@
 import 'package:recipes_app/core/errors.dart';
-import 'package:recipes_app/feature_recipes/domain/model/recipe.dart';
+import 'package:recipes_app/feature_recipes/presentation/recipes/recipes_state_holder.dart';
 
 sealed class RecipesState {}
 
@@ -8,9 +8,9 @@ class RecipesInitialState extends RecipesState {}
 class RecipesLoadingState extends RecipesState {}
 
 class RecipesSuccessState extends RecipesState {
-  final List<Recipe> recipes;
+  final RecipesStateHolder stateHolder;
 
-  RecipesSuccessState(this.recipes);
+  RecipesSuccessState(this.stateHolder);
 }
 
 class RecipesErrorStates extends RecipesState {

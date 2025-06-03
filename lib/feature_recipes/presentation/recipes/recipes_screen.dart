@@ -1,9 +1,9 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recipes_app/core/safe_scope.dart';
 import 'package:recipes_app/feature_recipes/data/data_source/recipe_dao_api.dart';
+import 'package:recipes_app/feature_recipes/presentation/recipe_detail/recipes_detail_screen.dart';
 import 'package:recipes_app/feature_recipes/presentation/recipes/recipes_bloc.dart';
 import 'package:recipes_app/feature_recipes/presentation/recipes/recipes_event.dart';
 import 'package:recipes_app/feature_recipes/presentation/recipes/recipes_state.dart';
@@ -53,14 +53,24 @@ class _RecipesScreenState extends State<RecipesScreen> {
                 return const Center(child: CircularProgressIndicator());
 
               case RecipesSuccessState():
-                final recipes = state.recipes;
+                final recipes = state.stateHolder.recipes;
                 return ListView.builder(
                   itemCount: recipes.length,
                   itemBuilder: (context, index) {
                     final recipe = recipes[index];
-                    return ListTile(
-                      title: Text(recipe.name),
-                      subtitle: Text(recipe.category),
+                    return InkWell(
+                      onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => RecipeDetail(
+                            recipe: recipe,
+                            addToFavorites: () => {},
+                          ),
+                        ),
+                      ),
+                      child: ListTile(
+                        title: Text(recipe.name),
+                        subtitle: Text(recipe.category),
+                      ),
                     );
                   },
                 );
