@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:dart_mappable/dart_mappable.dart';
 import 'package:recipes_app/core/errors.dart';
 import 'package:recipes_app/core/sanitizer.dart';
@@ -33,7 +32,6 @@ class Recipe with RecipeMappable {
   });
 
   static List<Recipe> getRecipeFromResponse(Map<String, dynamic> json) {
-    log("get recipe from json");
     if (json[RecipesKeys.meals.name] == null ||
         json[RecipesKeys.meals.name].runtimeType != List) {
       throw RecipeParseError(message: "No recipes in response");
@@ -46,18 +44,15 @@ class Recipe with RecipeMappable {
     for (final jsonRecipe in jsonRecipes) {
       try {
         final recipe = Recipe.fromBadApi(jsonRecipe);
-        recipes.add(Recipe.fromBadApi(jsonRecipe));
-        log(recipe.toString());
-      } catch (e) {
-        log("A recipe couldn't be parsed");
-      }
+        recipes.add(recipe);
+        // ignore: empty_catches
+      } catch (e) {}
     }
 
     return recipes;
   }
 
   factory Recipe.fromBadApi(Map<String, dynamic> json) {
-    log("im in bad api");
     String id = "";
     String name = "";
     String tumb = "";
@@ -92,9 +87,9 @@ class Recipe with RecipeMappable {
     ///incredients and measures, maybe the send an ingredient without measures in the middle
 
     ///To get all ingredients
-    for (i = 0; i < max; i++) {
-      String ingredientKey = '${RecipesKeys.strIngredient.name}i';
-      String measureKey = '${RecipesKeys.strMeasure.name}i';
+    for (i = 1; i <= max; i++) {
+      String ingredientKey = '${RecipesKeys.strIngredient.name}$i';
+      String measureKey = '${RecipesKeys.strMeasure.name}$i';
       if (!json.containsKey(ingredientKey)) break;
       String ingredient = sanitizeString(json, ingredientKey);
       String measure = sanitizeString(json, measureKey);

@@ -5,4 +5,5 @@ import 'package:recipes_app/feature_recipes/domain/model/recipe.dart';
 abstract class RecipeDao {
   Future<Result<List<Recipe>, RecipesException>> getRecipes();
   Future<void> toggleFavorite(String id);
+  Stream<Set<String>> getFavorites();
 }

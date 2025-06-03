@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:recipes_app/core/safe_scope.dart';
 import 'package:recipes_app/feature_recipes/domain/model/recipe.dart';
 
@@ -31,12 +30,22 @@ class RecipeDetail extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
+              SizedBox(height: 10),
               Text(
                 recipe.name,
                 textAlign: TextAlign.left,
                 style: theme.textTheme.headlineLarge,
               ),
-              Row(children: []),
+              if (recipe.tags.isNotEmpty) Text("tags: ${recipe.tags}"),
+
+              Text("Ingredients", textAlign: TextAlign.left),
+              ...List.generate(
+                recipe.ingredients.length,
+                (index) => DualText(
+                  text1: recipe.ingredients[index],
+                  text2: recipe.measures[index],
+                ),
+              ),
               Text("Instructions", textAlign: TextAlign.left),
               Text(recipe.instructions),
               Padding(
@@ -62,6 +71,22 @@ class RecipeDetail extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class DualText extends StatelessWidget {
+  const DualText({super.key, required this.text1, required this.text2});
+
+  final String text1;
+  final String text2;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      spacing: 10,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [Text(text1), Text(text2)],
     );
   }
 }

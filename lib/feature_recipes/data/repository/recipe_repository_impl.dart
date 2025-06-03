@@ -16,4 +16,7 @@ class RecipeRepositoryImpl extends RecipeRepository {
   @override
   Future<void> toogleFavorites(String recipeId) =>
       _dao.toggleFavorite(recipeId);
+
+  @override
+  Stream<Set<String>> getFavorites() => _dao.getFavorites();
 }

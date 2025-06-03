@@ -6,4 +6,6 @@ abstract class RecipeRepository {
   Future<Result<List<Recipe>, RecipesException>> getRecipes();
 
   Future<void> toogleFavorites(String recipeId);
+
+  Stream<Set<String>> getFavorites();
 }

@@ -1,10 +1,6 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:recipes_app/feature_recipes/data/data_source/recipe_dao_api.dart';
-import 'package:recipes_app/feature_recipes/domain/repository/recipe_repository.dart';
-import 'package:http/http.dart' as http;
 import 'package:recipes_app/main.dart';
 
 void main() {
@@ -28,15 +24,12 @@ void main() {
     RecipeDaoImpl recipeDaoApi = RecipeDaoImpl();
 
     await recipeDaoApi.getRecipes();
-    print("asddsa");
   });
 
   test('Api small test', () async {
-    final url = Uri.parse(
-      'https://www.themealdb.com/api/json/v1/1/search.php?f=a',
-    );
-    final response = await http.get(url);
-    print('Status: ${response.statusCode}');
-    print('Body: ${response.body}');
+    // final url = Uri.parse(
+    //   'https://www.themealdb.com/api/json/v1/1/search.php?f=a',
+    // );
+    //final response = await http.get(url);
   });
 }
