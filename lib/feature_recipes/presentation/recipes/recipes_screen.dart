@@ -45,24 +45,29 @@ class _RecipesScreenState extends State<RecipesScreen> {
         padding: const EdgeInsets.all(12.0),
         child: BlocBuilder<RecipesBloc, RecipesState>(
           builder: (context, state) {
-            if (state is RecipesLoadingState) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (state is RecipesSuccessState) {
-              final recipes = state.recipes;
-              return ListView.builder(
-                itemCount: recipes.length,
-                itemBuilder: (context, index) {
-                  final recipe = recipes[index];
-                  return ListTile(
-                    title: Text(recipe.name),
-                    subtitle: Text(recipe.category),
-                  );
-                },
-              );
-            } else if (state is RecipesErrorStates) {
-              return Center(child: Text('Error: ${state.error}'));
+            switch (state) {
+              case RecipesInitialState():
+                return const Center(child: Text('No data'));
+
+              case RecipesLoadingState():
+                return const Center(child: CircularProgressIndicator());
+
+              case RecipesSuccessState():
+                final recipes = state.recipes;
+                return ListView.builder(
+                  itemCount: recipes.length,
+                  itemBuilder: (context, index) {
+                    final recipe = recipes[index];
+                    return ListTile(
+                      title: Text(recipe.name),
+                      subtitle: Text(recipe.category),
+                    );
+                  },
+                );
+
+              case RecipesErrorStates():
+                return Center(child: Text('Error: ${state.error}'));
             }
-            return const Center(child: Text('No data'));
           },
         ),
       ),
