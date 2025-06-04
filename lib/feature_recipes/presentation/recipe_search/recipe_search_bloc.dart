@@ -13,6 +13,25 @@ class RecipeSearchBloc extends Bloc<RecipeSearchEvent, RecipeSearchState> {
     on<GetRecipes>(_getNotes);
     on<EnteredValue>(_enteredValue);
     on<Search>(_searchRecipes);
+    on<ToogleFavorites>(_toogleFavorites);
+    on<GetFavorites>(_getFavorites);
+    add(GetFavorites());
+  }
+
+  void _toogleFavorites(ToogleFavorites event, _) async =>
+      await _useCases.toogleFavorites(event.recipe.id);
+
+  void _getFavorites(
+    RecipeSearchEvent event,
+    Emitter<RecipeSearchState> emit,
+  ) async {
+    await emit.forEach(
+      _useCases.getFavorites(),
+      onData: (data) {
+        _state = _state.copyWith(favorites: data);
+        return SearchFoundState(stateHolder: _state);
+      },
+    );
   }
 
   void _searchRecipes(Search event, Emitter<RecipeSearchState> emit) async {
@@ -27,7 +46,7 @@ class RecipeSearchBloc extends Bloc<RecipeSearchEvent, RecipeSearchState> {
     _state = _state.copyWith(filtered: filtered);
 
     await Future.delayed(Duration(seconds: 1));
-    emit(SearchFoundState(recipesFound: _state.filtered));
+    emit(SearchFoundState(stateHolder: _state));
   }
 
   void _enteredValue(EnteredValue event, Emitter<RecipeSearchState> emit) {

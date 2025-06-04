@@ -10,12 +10,13 @@ class RecipeRepositoryImpl extends RecipeRepository {
   RecipeRepositoryImpl(this._dao);
 
   @override
-  Future<Result<List<Recipe>, RecipesException>> getRecipes(bool reload) =>
-      _dao.getRecipes(reload);
+  Future<Result<List<Recipe>, RecipesException>> getRecipes(
+    bool reload,
+  ) async => await _dao.getRecipes(reload);
 
   @override
-  Future<void> toogleFavorites(String recipeId) =>
-      _dao.toggleFavorite(recipeId);
+  Future<void> toogleFavorites(String recipeId) async =>
+      await _dao.toggleFavorite(recipeId);
 
   @override
   Stream<Set<String>> getFavorites() => _dao.getFavorites();

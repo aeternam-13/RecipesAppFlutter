@@ -32,19 +32,24 @@ class RecipeSearchStateHolderMapper
   static String _$value(RecipeSearchStateHolder v) => v.value;
   static const Field<RecipeSearchStateHolder, String> _f$value =
       Field('value', _$value);
+  static Set<String> _$favorites(RecipeSearchStateHolder v) => v.favorites;
+  static const Field<RecipeSearchStateHolder, Set<String>> _f$favorites =
+      Field('favorites', _$favorites);
 
   @override
   final MappableFields<RecipeSearchStateHolder> fields = const {
     #filtered: _f$filtered,
     #allRecipes: _f$allRecipes,
     #value: _f$value,
+    #favorites: _f$favorites,
   };
 
   static RecipeSearchStateHolder _instantiate(DecodingData data) {
     return RecipeSearchStateHolder(
         filtered: data.dec(_f$filtered),
         allRecipes: data.dec(_f$allRecipes),
-        value: data.dec(_f$value));
+        value: data.dec(_f$value),
+        favorites: data.dec(_f$favorites));
   }
 
   @override
@@ -107,7 +112,11 @@ abstract class RecipeSearchStateHolderCopyWith<
     $Out> implements ClassCopyWith<$R, $In, $Out> {
   ListCopyWith<$R, Recipe, RecipeCopyWith<$R, Recipe, Recipe>> get filtered;
   ListCopyWith<$R, Recipe, RecipeCopyWith<$R, Recipe, Recipe>> get allRecipes;
-  $R call({List<Recipe>? filtered, List<Recipe>? allRecipes, String? value});
+  $R call(
+      {List<Recipe>? filtered,
+      List<Recipe>? allRecipes,
+      String? value,
+      Set<String>? favorites});
   RecipeSearchStateHolderCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2>(
       Then<$Out2, $R2> t);
 }
@@ -130,17 +139,23 @@ class _RecipeSearchStateHolderCopyWithImpl<$R, $Out>
       ListCopyWith($value.allRecipes, (v, t) => v.copyWith.$chain(t),
           (v) => call(allRecipes: v));
   @override
-  $R call({List<Recipe>? filtered, List<Recipe>? allRecipes, String? value}) =>
+  $R call(
+          {List<Recipe>? filtered,
+          List<Recipe>? allRecipes,
+          String? value,
+          Set<String>? favorites}) =>
       $apply(FieldCopyWithData({
         if (filtered != null) #filtered: filtered,
         if (allRecipes != null) #allRecipes: allRecipes,
-        if (value != null) #value: value
+        if (value != null) #value: value,
+        if (favorites != null) #favorites: favorites
       }));
   @override
   RecipeSearchStateHolder $make(CopyWithData data) => RecipeSearchStateHolder(
       filtered: data.get(#filtered, or: $value.filtered),
       allRecipes: data.get(#allRecipes, or: $value.allRecipes),
-      value: data.get(#value, or: $value.value));
+      value: data.get(#value, or: $value.value),
+      favorites: data.get(#favorites, or: $value.favorites));
 
   @override
   RecipeSearchStateHolderCopyWith<$R2, RecipeSearchStateHolder, $Out2>

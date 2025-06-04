@@ -7,11 +7,11 @@ class RecipeDetailScreen extends StatelessWidget {
   const RecipeDetailScreen({
     super.key,
     required this.recipe,
-    required this.addToFavorites,
+    required this.isFavorite,
   });
 
   final Recipe recipe;
-  final VoidCallback addToFavorites;
+  final bool isFavorite;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,16 @@ class RecipeDetailScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(height: 10),
+              if (isFavorite)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  spacing: 8,
+                  children: [
+                    Icon(Icons.star, size: 12, color: theme.primaryColor),
+                    Text("FAVORITE", style: TextStyle(fontSize: 12)),
+                    Icon(Icons.star, size: 12, color: theme.primaryColor),
+                  ],
+                ),
               Padding(
                 padding: const EdgeInsets.all(4.0),
                 child: Hero(
@@ -65,8 +74,8 @@ class RecipeDetailScreen extends StatelessWidget {
                     ),
                 ],
               ),
-
               Divider(),
+
               Text("Ingredients", style: theme.textTheme.titleLarge),
               ...List.generate(
                 recipe.ingredients.length,
@@ -76,6 +85,7 @@ class RecipeDetailScreen extends StatelessWidget {
                 ),
               ),
               Divider(),
+
               Text("Instructions", style: theme.textTheme.titleLarge),
               Text(recipe.instructions),
               Divider(),
@@ -83,9 +93,17 @@ class RecipeDetailScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 spacing: 8,
                 children: [
-                  Icon(Icons.star, size: 22, color: theme.primaryColor),
+                  Icon(
+                    Icons.arrow_downward,
+                    size: 22,
+                    color: theme.primaryColor,
+                  ),
                   Text("LINK TO VIDEO"),
-                  Icon(Icons.star, size: 22, color: theme.primaryColor),
+                  Icon(
+                    Icons.arrow_downward,
+                    size: 22,
+                    color: theme.primaryColor,
+                  ),
                 ],
               ),
               Text(recipe.videoLink, style: theme.textTheme.labelLarge),

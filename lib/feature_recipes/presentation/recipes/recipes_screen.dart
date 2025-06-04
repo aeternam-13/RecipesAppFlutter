@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recipes_app/core/safe_scope.dart';
+import 'package:recipes_app/feature_recipes/domain/model/recipe.dart';
 import 'package:recipes_app/feature_recipes/presentation/common/recipe_detail.dart';
 import 'package:recipes_app/feature_recipes/presentation/recipe_search/recipe_search_bloc.dart';
 import 'package:recipes_app/feature_recipes/presentation/recipe_search/recipe_search_screen.dart';
@@ -64,7 +65,15 @@ class _RecipesScreenState extends State<RecipesScreen> {
 
               case RecipesSuccessState():
                 final recipes = state.stateHolder.recipes;
-                return RecipeDetailList(recipes: recipes);
+                return RecipeList(
+                  recipes: recipes,
+                  favorites: state.stateHolder.favorites,
+                  toogleFavoritesCallback: (Recipe recipe) {
+                    context.read<RecipesBloc>().add(
+                      ToogleFavorites(recipe: recipe),
+                    );
+                  },
+                );
 
               case RecipesErrorStates():
                 return Center(

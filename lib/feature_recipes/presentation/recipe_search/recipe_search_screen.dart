@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recipes_app/core/safe_scope.dart';
+import 'package:recipes_app/feature_recipes/domain/model/recipe.dart';
 import 'package:recipes_app/feature_recipes/presentation/common/recipe_detail.dart';
 import 'package:recipes_app/feature_recipes/presentation/recipe_search/recipe_search_bloc.dart';
 import 'package:recipes_app/feature_recipes/presentation/recipe_search/recipe_search_event.dart';
@@ -106,7 +107,7 @@ class _RecipeSearchScreenState extends State<RecipeSearchScreen> {
                   case ErrorSearch():
                     return SizedBox.shrink();
                   case SearchFoundState():
-                    if (state.recipesFound.isEmpty) {
+                    if (state.stateHolder.filtered.isEmpty) {
                       return Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         mainAxisSize: MainAxisSize.max,
@@ -120,7 +121,15 @@ class _RecipeSearchScreenState extends State<RecipeSearchScreen> {
                       );
                     }
                     return Expanded(
-                      child: RecipeDetailList(recipes: state.recipesFound),
+                      child: RecipeList(
+                        favorites: state.stateHolder.favorites,
+                        recipes: state.stateHolder.filtered,
+                        toogleFavoritesCallback: (Recipe recipe) {
+                          context.read<RecipeSearchBloc>().add(
+                            ToogleFavorites(recipe: recipe),
+                          );
+                        },
+                      ),
                     );
                 }
               },

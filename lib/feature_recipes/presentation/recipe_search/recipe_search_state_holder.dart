@@ -8,15 +8,18 @@ class RecipeSearchStateHolder with RecipeSearchStateHolderMappable {
   final List<Recipe> filtered;
   final List<Recipe> allRecipes;
   final String value;
+  final Set<String> favorites;
 
   RecipeSearchStateHolder({
     required this.filtered,
     required this.allRecipes,
     required this.value,
+    required this.favorites,
   });
 
   RecipeSearchStateHolder.initial()
     : filtered = [],
       allRecipes = [],
-      value = "";
+      value = "",
+      favorites = {};
 }

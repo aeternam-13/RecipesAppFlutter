@@ -3,21 +3,34 @@ import 'package:flutter/material.dart';
 import 'package:recipes_app/feature_recipes/domain/model/recipe.dart';
 import 'package:recipes_app/feature_recipes/presentation/recipe_detail/recipes_detail_screen.dart';
 
-class RecipeDetailList extends StatelessWidget {
-  const RecipeDetailList({super.key, required this.recipes});
+typedef ToogleFavoritesCallback = void Function(Recipe);
+
+class RecipeList extends StatelessWidget {
+  const RecipeList({
+    super.key,
+    required this.recipes,
+    required this.toogleFavoritesCallback,
+    required this.favorites,
+  });
+
   final List<Recipe> recipes;
+  final ToogleFavoritesCallback toogleFavoritesCallback;
+  final Set<String> favorites;
 
   @override
   Widget build(BuildContext context) {
+    
+    final theme = Theme.of(context);
     return ListView.builder(
       itemCount: recipes.length,
       itemBuilder: (context, index) {
         final recipe = recipes[index];
+        bool isFavorite = favorites.contains(recipe.id);
         return InkWell(
           onTap: () => Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) =>
-                  RecipeDetailScreen(recipe: recipe, addToFavorites: () => {}),
+                  RecipeDetailScreen(recipe: recipe, isFavorite: isFavorite),
             ),
           ),
           child: Padding(
@@ -39,7 +52,12 @@ class RecipeDetailList extends StatelessWidget {
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 subtitle: Text(recipe.category),
-                trailing: Icon(Icons.more_vert),
+                trailing: IconButton(
+                  onPressed: () => toogleFavoritesCallback(recipe),
+                  icon: isFavorite
+                      ? Icon(Icons.star, color: theme.colorScheme.primary)
+                      : Icon(Icons.star_border),
+                ),
               ),
             ),
           ),

@@ -1,5 +1,5 @@
 import 'package:recipes_app/core/errors.dart';
-import 'package:recipes_app/feature_recipes/domain/model/recipe.dart';
+import 'package:recipes_app/feature_recipes/presentation/recipe_search/recipe_search_state_holder.dart';
 
 sealed class RecipeSearchState {}
 
@@ -14,7 +14,8 @@ class ErrorSearch extends RecipeSearchState {
 }
 
 class SearchFoundState extends RecipeSearchState {
-  final List<Recipe> recipesFound;
+  final RecipeSearchStateHolder stateHolder;
 
-  SearchFoundState({required this.recipesFound});
+
+  SearchFoundState({required this.stateHolder});
 }
