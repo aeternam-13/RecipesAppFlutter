@@ -44,6 +44,7 @@ class _RecipeSearchScreenState extends State<RecipeSearchScreen> {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
+          spacing: 10,
           children: [
             Row(
               spacing: 10,
@@ -83,31 +84,46 @@ class _RecipeSearchScreenState extends State<RecipeSearchScreen> {
                 ),
               ],
             ),
-            Expanded(
-              child: BlocBuilder<RecipeSearchBloc, RecipeSearchState>(
-                builder: (context, state) {
-                  switch (state) {
-                    case EmptySearchState():
-                      return Padding(
-                        padding: EdgeInsets.all(8),
-                        child: Text(
-                          "Enter any text with 3 or more letters and press search button",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      );
-                    case SearchingState():
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: LinearProgressIndicator(),
-                      );
 
-                    case ErrorSearch():
-                      return SizedBox.shrink();
-                    case SearchFoundState():
-                      return RecipeDetailList(recipes: state.recipesFound);
-                  }
-                },
-              ),
+            BlocBuilder<RecipeSearchBloc, RecipeSearchState>(
+              builder: (context, state) {
+                switch (state) {
+                  case EmptySearchState():
+                    return Padding(
+                      padding: EdgeInsets.all(8),
+                      child: Text(
+                        textAlign: TextAlign.center,
+                        "Enter any text with 3 or more letters and press search button",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    );
+                  case SearchingState():
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: LinearProgressIndicator(),
+                    );
+
+                  case ErrorSearch():
+                    return SizedBox.shrink();
+                  case SearchFoundState():
+                    if (state.recipesFound.isEmpty) {
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Icon(Icons.warning, color: Colors.amber, size: 60),
+                          Text(
+                            "No results found",
+                            style: theme.textTheme.labelLarge,
+                          ),
+                        ],
+                      );
+                    }
+                    return Expanded(
+                      child: RecipeDetailList(recipes: state.recipesFound),
+                    );
+                }
+              },
             ),
           ],
         ),

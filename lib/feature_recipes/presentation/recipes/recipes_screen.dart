@@ -1,11 +1,7 @@
-import 'dart:developer';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recipes_app/core/safe_scope.dart';
-import 'package:recipes_app/feature_recipes/data/data_source/recipe_dao_api.dart';
 import 'package:recipes_app/feature_recipes/presentation/common/recipe_detail.dart';
-import 'package:recipes_app/feature_recipes/presentation/recipe_detail/recipes_detail_screen.dart';
 import 'package:recipes_app/feature_recipes/presentation/recipe_search/recipe_search_bloc.dart';
 import 'package:recipes_app/feature_recipes/presentation/recipe_search/recipe_search_screen.dart';
 import 'package:recipes_app/feature_recipes/presentation/recipes/recipes_bloc.dart';

@@ -28,7 +28,7 @@ class RecipesApp extends StatelessWidget {
       title: 'Recipes App',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color.fromARGB(255, 20, 134, 255),
+          seedColor: const Color.fromARGB(255, 34, 255, 240),
         ),
       ),
       home: MultiBlocProvider(
