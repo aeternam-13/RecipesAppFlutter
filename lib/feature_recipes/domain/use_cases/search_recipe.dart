@@ -3,10 +3,10 @@ import 'package:recipes_app/feature_recipes/domain/model/recipe.dart';
 
 class SearchRecipe {
   Future<List<Recipe>> call(List<Recipe> all, String value) async {
-    return await compute(findInRecipes, SerachArgs(list: all, value: value));
+    return await compute(_findInRecipes, SerachArgs(list: all, value: value));
   }
 
-  List<Recipe> findInRecipes(SerachArgs args) {
+  List<Recipe> _findInRecipes(SerachArgs args) {
     final List<Recipe> filtered = [];
 
     for (Recipe recipe in args.list) {

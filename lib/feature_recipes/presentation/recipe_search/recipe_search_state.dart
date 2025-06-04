@@ -7,8 +7,6 @@ class EmptySearchState extends RecipeSearchState {}
 
 class SearchingState extends RecipeSearchState {}
 
-class SearchLoading extends RecipeSearchState {}
-
 class ErrorSearch extends RecipeSearchState {
   final RecipesException error;
 

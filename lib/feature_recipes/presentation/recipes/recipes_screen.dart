@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recipes_app/core/safe_scope.dart';
 import 'package:recipes_app/feature_recipes/data/data_source/recipe_dao_api.dart';
+import 'package:recipes_app/feature_recipes/presentation/common/recipe_detail.dart';
 import 'package:recipes_app/feature_recipes/presentation/recipe_detail/recipes_detail_screen.dart';
+import 'package:recipes_app/feature_recipes/presentation/recipe_search/recipe_search_bloc.dart';
 import 'package:recipes_app/feature_recipes/presentation/recipe_search/recipe_search_screen.dart';
 import 'package:recipes_app/feature_recipes/presentation/recipes/recipes_bloc.dart';
 import 'package:recipes_app/feature_recipes/presentation/recipes/recipes_event.dart';
@@ -41,7 +43,12 @@ class _RecipesScreenState extends State<RecipesScreen> {
             IconButton(
               iconSize: 28,
               onPressed: () => Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => RecipeSearchScreen()),
+                MaterialPageRoute(
+                  builder: (_) => BlocProvider.value(
+                    value: context.read<RecipeSearchBloc>(),
+                    child: RecipeSearchScreen(),
+                  ),
+                ),
               ),
               icon: Icon(Icons.search),
             ),
@@ -54,54 +61,14 @@ class _RecipesScreenState extends State<RecipesScreen> {
           builder: (context, state) {
             switch (state) {
               case RecipesInitialState():
-                return const Center(child: Text('No data'));
+                return const Center(child: Text('Nothing yet'));
 
               case RecipesLoadingState():
                 return const Center(child: CircularProgressIndicator());
 
               case RecipesSuccessState():
                 final recipes = state.stateHolder.recipes;
-                return ListView.builder(
-                  itemCount: recipes.length,
-                  itemBuilder: (context, index) {
-                    final recipe = recipes[index];
-                    return InkWell(
-                      onTap: () => Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => RecipeDetailScreen(
-                            recipe: recipe,
-                            addToFavorites: () => {},
-                          ),
-                        ),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(bottom: 2.0, top: 2.0),
-                        child: Card(
-                          elevation: 6,
-                          child: ListTile(
-                            leading: Hero(
-                              tag: recipe.tumb,
-                              child: CachedNetworkImage(
-                                width: 40,
-                                imageUrl: recipe.tumb,
-                                placeholder: (context, url) =>
-                                    CircularProgressIndicator(),
-                                errorWidget: (context, url, error) =>
-                                    Icon(Icons.error),
-                              ),
-                            ),
-                            title: Text(
-                              recipe.name,
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                            subtitle: Text(recipe.category),
-                            trailing: Icon(Icons.more_vert),
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                );
+                return RecipeDetailList(recipes: recipes);
 
               case RecipesErrorStates():
                 return Center(child: Text('Error: ${state.error}'));

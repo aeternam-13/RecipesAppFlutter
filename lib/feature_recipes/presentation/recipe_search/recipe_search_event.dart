@@ -5,6 +5,8 @@ class EnteredValue extends RecipeSearchEvent {
   EnteredValue({required this.value});
 }
 
-class Searched extends RecipeSearchEvent {}
+class Search extends RecipeSearchEvent {}
+
+class SerachResult extends RecipeSearchEvent {}
 
 class GetRecipes extends RecipeSearchEvent {}

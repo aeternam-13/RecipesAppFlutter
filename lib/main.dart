@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_ce/hive.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:recipes_app/di/dependency_injection.dart';
+import 'package:recipes_app/feature_recipes/presentation/recipe_search/recipe_search_bloc.dart';
 import 'package:recipes_app/feature_recipes/presentation/recipes/recipes_bloc.dart';
 import 'package:recipes_app/feature_recipes/presentation/recipes/recipes_screen.dart';
 
@@ -31,7 +32,10 @@ class RecipesApp extends StatelessWidget {
         ),
       ),
       home: MultiBlocProvider(
-        providers: [BlocProvider(create: (_) => sl<RecipesBloc>())],
+        providers: [
+          BlocProvider(create: (_) => sl<RecipeSearchBloc>()),
+          BlocProvider(create: (_) => sl<RecipesBloc>()),
+        ],
         child: const RecipesScreen(),
       ),
     );

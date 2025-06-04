@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recipes_app/core/safe_scope.dart';
+import 'package:recipes_app/feature_recipes/presentation/common/recipe_detail.dart';
+import 'package:recipes_app/feature_recipes/presentation/recipe_search/recipe_search_bloc.dart';
+import 'package:recipes_app/feature_recipes/presentation/recipe_search/recipe_search_event.dart';
+import 'package:recipes_app/feature_recipes/presentation/recipe_search/recipe_search_state.dart';
 
 class RecipeSearchScreen extends StatefulWidget {
   const RecipeSearchScreen({super.key});
@@ -9,11 +14,27 @@ class RecipeSearchScreen extends StatefulWidget {
 }
 
 class _RecipeSearchScreenState extends State<RecipeSearchScreen> {
+  late final TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController(text: "");
+    context.read<RecipeSearchBloc>().add(GetRecipes());
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return SafeScope(
       appBar: AppBar(
+        backgroundColor: theme.colorScheme.inversePrimary,
         title: Text("Search recipes"),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
@@ -29,6 +50,10 @@ class _RecipeSearchScreenState extends State<RecipeSearchScreen> {
               children: [
                 Expanded(
                   child: TextFormField(
+                    controller: _controller,
+                    onChanged: (val) => context.read<RecipeSearchBloc>().add(
+                      EnteredValue(value: val),
+                    ),
                     decoration: InputDecoration(
                       label: Container(
                         decoration: const BoxDecoration(
@@ -48,7 +73,8 @@ class _RecipeSearchScreenState extends State<RecipeSearchScreen> {
                   ),
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () =>
+                      context.read<RecipeSearchBloc>().add(Search()),
                   icon: Icon(
                     Icons.search,
                     size: 32,
@@ -56,6 +82,32 @@ class _RecipeSearchScreenState extends State<RecipeSearchScreen> {
                   ),
                 ),
               ],
+            ),
+            Expanded(
+              child: BlocBuilder<RecipeSearchBloc, RecipeSearchState>(
+                builder: (context, state) {
+                  switch (state) {
+                    case EmptySearchState():
+                      return Padding(
+                        padding: EdgeInsets.all(8),
+                        child: Text(
+                          "Enter any text with 3 or more letters and press search button",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      );
+                    case SearchingState():
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: LinearProgressIndicator(),
+                      );
+
+                    case ErrorSearch():
+                      return SizedBox.shrink();
+                    case SearchFoundState():
+                      return RecipeDetailList(recipes: state.recipesFound);
+                  }
+                },
+              ),
             ),
           ],
         ),
