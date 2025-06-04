@@ -23,7 +23,7 @@ void main() {
   test('API call', () async {
     RecipeDaoImpl recipeDaoApi = RecipeDaoImpl();
 
-    await recipeDaoApi.getRecipes();
+    await recipeDaoApi.getRecipes(true);
   });
 
   test('Api small test', () async {

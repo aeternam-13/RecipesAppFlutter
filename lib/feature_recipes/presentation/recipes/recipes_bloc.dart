@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recipes_app/feature_recipes/domain/use_cases/use_cases.dart';
 import 'package:recipes_app/feature_recipes/presentation/recipes/recipes_event.dart';
@@ -20,13 +18,12 @@ class RecipesBloc extends Bloc<RecipesEvent, RecipesState> {
     on<GetRecipes>(_getNotes);
     on<AddToFavorites>(toogleFavorites);
     on<GetFavorites>(_getFavorites);
-    log("putas madres entro aqui");
     add(GetFavorites());
   }
 
   void _getNotes(RecipesEvent event, Emitter<RecipesState> emit) async {
     emit(RecipesLoadingState());
-    final result = await _useCases.getRecipes();
+    final result = await _useCases.getRecipes(true);
 
     result.when((recipes) {
       _state = _state.copyWith(recipes: recipes);

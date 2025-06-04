@@ -20,8 +20,12 @@ class RecipeDaoImpl extends RecipeDao {
 
   final String _favoritesKey = "favorites";
 
+  List<Recipe> _loadedRecipes = [];
+
   @override
-  Future<Result<List<Recipe>, RecipesException>> getRecipes() async {
+  Future<Result<List<Recipe>, RecipesException>> getRecipes(bool reload) async {
+    if (!reload && _loadedRecipes.isNotEmpty) return Success(_loadedRecipes);
+
     const letters = 'abcdefghijklmnopqrstuvwxyz';
     final List<Future<Result<List<Recipe>, RecipesException>>> futures = [];
 
@@ -48,6 +52,7 @@ class RecipeDaoImpl extends RecipeDao {
         ApiError(statusCode: 500, message: "All recipe requests failed."),
       );
     }
+    _loadedRecipes = allRecipes;
     return Success(allRecipes);
   }
 

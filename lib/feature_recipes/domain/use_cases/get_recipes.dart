@@ -8,7 +8,7 @@ class GetRecipes {
 
   GetRecipes(this.repository);
 
-  Future<Result<List<Recipe>, RecipesException>> call() async {
-    return await repository.getRecipes();
+  Future<Result<List<Recipe>, RecipesException>> call(bool reload) async {
+    return await repository.getRecipes(reload);
   }
 }

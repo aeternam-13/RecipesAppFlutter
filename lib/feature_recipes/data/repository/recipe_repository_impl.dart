@@ -10,8 +10,8 @@ class RecipeRepositoryImpl extends RecipeRepository {
   RecipeRepositoryImpl(this._dao);
 
   @override
-  Future<Result<List<Recipe>, RecipesException>> getRecipes() =>
-      _dao.getRecipes();
+  Future<Result<List<Recipe>, RecipesException>> getRecipes(bool reload) =>
+      _dao.getRecipes(reload);
 
   @override
   Future<void> toogleFavorites(String recipeId) =>

@@ -24,22 +24,38 @@ class _RecipeSearchScreenState extends State<RecipeSearchScreen> {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            TextFormField(
-              decoration: InputDecoration(
-                label: Container(
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(5)),
+            Row(
+              spacing: 10,
+              children: [
+                Expanded(
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      label: Container(
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(5)),
+                        ),
+                        padding: const EdgeInsets.only(
+                          left: 3,
+                          right: 3,
+                          top: 4,
+                        ),
+                        child: const Text('Search'),
+                      ),
+
+                      border: const OutlineInputBorder(),
+                    ),
                   ),
-                  padding: const EdgeInsets.only(left: 3, right: 3, top: 4),
-                  child: const Text('Search'),
                 ),
-                suffixIcon: Icon(
-                  Icons.search,
-                  color: theme.colorScheme.primary,
+                IconButton(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.search,
+                    size: 32,
+                    color: theme.colorScheme.primary,
+                  ),
                 ),
-                border: const OutlineInputBorder(),
-              ),
+              ],
             ),
           ],
         ),
