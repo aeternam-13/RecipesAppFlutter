@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:recipes_app/core/safe_scope.dart';
 import 'package:recipes_app/feature_recipes/domain/model/recipe.dart';
 
-class RecipeDetail extends StatelessWidget {
-  const RecipeDetail({
+class RecipeDetailScreen extends StatelessWidget {
+  const RecipeDetailScreen({
     super.key,
     required this.recipe,
     required this.addToFavorites,
@@ -18,7 +18,14 @@ class RecipeDetail extends StatelessWidget {
     final theme = Theme.of(context);
     return SafeScope(
       appBar: AppBar(
-        title: Text("Recipe details"),
+        centerTitle: true,
+        backgroundColor: theme.colorScheme.inversePrimary,
+        title: Text(
+          recipe.name,
+          textAlign: TextAlign.center,
+          overflow: TextOverflow.ellipsis,
+          style: theme.textTheme.headlineMedium,
+        ),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () => Navigator.of(context).pop(),
@@ -28,17 +35,39 @@ class RecipeDetail extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(12.0),
           child: Column(
+            spacing: 8,
             mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(height: 10),
-              Text(
-                recipe.name,
-                textAlign: TextAlign.left,
-                style: theme.textTheme.headlineLarge,
+              Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: Hero(
+                  tag: recipe.tumb,
+                  child: CachedNetworkImage(
+                    width: 150,
+                    imageUrl: recipe.tumb,
+                    placeholder: (context, url) => CircularProgressIndicator(),
+                    errorWidget: (context, url, error) => Icon(Icons.error),
+                  ),
+                ),
               ),
-              if (recipe.tags.isNotEmpty) Text("tags: ${recipe.tags}"),
+              Column(
+                children: [
+                  if (recipe.tags.isNotEmpty)
+                    Text(recipe.category, style: theme.textTheme.bodySmall),
+                  if (recipe.area.isNotEmpty)
+                    Text(recipe.area, style: theme.textTheme.bodySmall),
+                  if (recipe.tags.isNotEmpty)
+                    Text(
+                      "tags: ${recipe.tags}",
+                      style: theme.textTheme.bodySmall,
+                    ),
+                ],
+              ),
 
-              Text("Ingredients", textAlign: TextAlign.left),
+              Divider(),
+              Text("Ingredients", style: theme.textTheme.titleLarge),
               ...List.generate(
                 recipe.ingredients.length,
                 (index) => DualText(
@@ -46,24 +75,17 @@ class RecipeDetail extends StatelessWidget {
                   text2: recipe.measures[index],
                 ),
               ),
-              Text("Instructions", textAlign: TextAlign.left),
+              Divider(),
+              Text("Instructions", style: theme.textTheme.titleLarge),
               Text(recipe.instructions),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: CachedNetworkImage(
-                  width: 200,
-                  imageUrl: recipe.tumb,
-                  placeholder: (context, url) => CircularProgressIndicator(),
-                  errorWidget: (context, url, error) => Icon(Icons.error),
-                ),
-              ),
+              Divider(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 spacing: 8,
                 children: [
-                  Icon(Icons.star),
+                  Icon(Icons.star, size: 22, color: theme.primaryColor),
                   Text("LINK TO VIDEO"),
-                  Icon(Icons.star),
+                  Icon(Icons.star, size: 22, color: theme.primaryColor),
                 ],
               ),
               Text(recipe.videoLink, style: theme.textTheme.labelLarge),
@@ -86,7 +108,10 @@ class DualText extends StatelessWidget {
     return Row(
       spacing: 10,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [Text(text1), Text(text2)],
+      children: [
+        Text(text1, style: TextStyle(fontWeight: FontWeight.bold)),
+        Text(text2),
+      ],
     );
   }
 }

@@ -7,6 +7,8 @@ import 'package:recipes_app/feature_recipes/presentation/recipes/recipes_bloc.da
 import 'package:recipes_app/feature_recipes/presentation/recipes/recipes_screen.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   /// get_it dependencies
   initServices();
 
@@ -24,7 +26,9 @@ class RecipesApp extends StatelessWidget {
     return MaterialApp(
       title: 'Recipes App',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color.fromARGB(255, 20, 134, 255),
+        ),
       ),
       home: MultiBlocProvider(
         providers: [BlocProvider(create: (_) => sl<RecipesBloc>())],
