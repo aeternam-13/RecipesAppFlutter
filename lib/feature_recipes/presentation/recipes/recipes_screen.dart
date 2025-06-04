@@ -67,7 +67,15 @@ class _RecipesScreenState extends State<RecipesScreen> {
                 return RecipeDetailList(recipes: recipes);
 
               case RecipesErrorStates():
-                return Center(child: Text('Error: ${state.error}'));
+                return Center(
+                  child: Column(
+                    children: [
+                      Icon(Icons.error, color: Colors.red, size: 60),
+                      Text("An error as ocurred"),
+                      Text('Error: ${state.error}'),
+                    ],
+                  ),
+                );
             }
           },
         ),
