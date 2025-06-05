@@ -1,6 +1,6 @@
 import 'package:recipes_app/feature_recipes/domain/model/recipe.dart';
 
-abstract class RecipesEvent {}
+sealed class RecipesEvent {}
 
 class GetRecipes extends RecipesEvent {}
 
